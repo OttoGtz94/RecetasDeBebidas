@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ModalContext } from '../context/ModalContext';
 
-const Receta = () => {
+const Receta = ({ receta }) => {
+	const {
+		idDrink,
+		strDrinkThumb,
+		strDrink,
+		strInstructions,
+	} = receta;
+
+	const { guardarIdReceta } = useContext(ModalContext);
 	return (
 		<div className='col-md-4 mb-3'>
 			<div className='card'>
-				<h2 className='card-header'></h2>
+				<h2 className='card-header'>{strDrink}</h2>
 
-				<img className='card-img-top' />
+				<img
+					className='card-img-top'
+					src={strDrinkThumb}
+					alt={`Imagen de ${strDrink}`}
+				/>
 
 				<div className='card-body'>
 					<button
 						type='button'
 						className='btn btn-block btn-primary'
+						onClick={() => {
+							guardarIdReceta(idDrink);
+						}}
 					>
 						Ver Receta
 					</button>
-
-					<div>
-						<h2></h2>
-						<h3 className='mt-4'>Instrucciones</h3>
-
-						<img className='img-fluid my-4' />
-
-						<h3>Ingredientes y cantidades</h3>
-						<ul></ul>
-					</div>
 				</div>
 			</div>
 		</div>
