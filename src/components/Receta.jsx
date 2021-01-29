@@ -39,14 +39,14 @@ const Receta = ({ receta }) => {
 		setOpen(false);
 	};
 
-	const {
-		idDrink,
-		strDrinkThumb,
-		strDrink,
-		strInstructions,
-	} = receta;
+	const { idDrink, strDrinkThumb, strDrink } = receta;
 
-	const { guardarIdReceta } = useContext(ModalContext);
+	const {
+		informacionReceta,
+		guardarIdReceta,
+		guardarReceta,
+	} = useContext(ModalContext);
+
 	return (
 		<div className='col-md-4 mb-3'>
 			<div className='card'>
@@ -75,13 +75,21 @@ const Receta = ({ receta }) => {
 						onClose={() => {
 							handleClose();
 							guardarIdReceta(null);
+							guardarReceta({});
 						}}
 					>
 						<div
 							style={modalStyle}
 							className={classes.paper}
 						>
-							<h1>Desde modal</h1>
+							<h2>{informacionReceta.strDrink}</h2>
+							<h3 className='mt-4'>Instrucciones</h3>
+							<p>{informacionReceta.strInstructions}</p>
+							<img
+								src={informacionReceta.strDrinkThumb}
+								alt=''
+								className='img-fluid my-4'
+							/>
 						</div>
 					</Modal>
 				</div>
