@@ -1,7 +1,44 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { ModalContext } from '../context/ModalContext';
 
+// Inicio de código de material ui
+import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+// import { ModalConsumer } from '../context/ModalContext';
+function getModalStyle() {
+	const top = 50;
+	const left = 50;
+
+	return {
+		top: `${top}%`,
+		left: `${left}%`,
+		transform: `translate(-${top}%, -${left}%)`,
+	};
+}
+
+const useStyles = makeStyles(theme => ({
+	paper: {
+		position: 'absolute',
+		width: 400,
+		backgroundColor: theme.palette.background.paper,
+		boxShadow: theme.shadows[5],
+		padding: theme.spacing(2, 4, 3),
+	},
+}));
+// Fin de código de material ui
+
 const Receta = ({ receta }) => {
+	// Config del modal de material ui
+	const [modalStyle] = useState(getModalStyle);
+	const [open, setOpen] = useState(false);
+	const classes = useStyles();
+	const handleOpen = () => {
+		setOpen(true);
+	};
+	const handleClose = () => {
+		setOpen(false);
+	};
+
 	const {
 		idDrink,
 		strDrinkThumb,
@@ -27,10 +64,26 @@ const Receta = ({ receta }) => {
 						className='btn btn-block btn-primary'
 						onClick={() => {
 							guardarIdReceta(idDrink);
+							handleOpen();
 						}}
 					>
 						Ver Receta
 					</button>
+
+					<Modal
+						open={open}
+						onClose={() => {
+							handleClose();
+							guardarIdReceta(null);
+						}}
+					>
+						<div
+							style={modalStyle}
+							className={classes.paper}
+						>
+							<h1>Desde modal</h1>
+						</div>
+					</Modal>
 				</div>
 			</div>
 		</div>
